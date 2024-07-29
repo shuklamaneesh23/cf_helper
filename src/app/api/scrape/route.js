@@ -1,7 +1,7 @@
-import { scrapeCodeforcesSubmission } from '../../../utils/scrapper';
+import { scrapeCodeforcesProblemStatus } from '../../../utils/scrapper';
 
 export async function POST(req) {
-  const { url } = await req.json();
+  const { url, verdict, language } = await req.json();
 
   if (!url) {
     return new Response(JSON.stringify({ error: 'URL is required' }), {
@@ -11,7 +11,7 @@ export async function POST(req) {
   }
 
   // Validate the URL format
-  const urlPattern = /^https:\/\/codeforces\.com\/contest\/\d+\/submission\/\d+$/;
+  const urlPattern = /^https:\/\/codeforces\.com\/problemset\/status\/\d+\/problem\/[A-Z]$/;
   if (!urlPattern.test(url)) {
     return new Response(JSON.stringify({ error: 'Invalid URL format' }), {
       status: 400,
@@ -20,8 +20,14 @@ export async function POST(req) {
   }
 
   try {
-    const data = await scrapeCodeforcesSubmission(url);
-    return new Response(JSON.stringify({ data }), {
+    const data = await scrapeCodeforcesProblemStatus(url);
+
+    // Filter data based on the verdict and language
+    const filteredData = data.filter(submission => {
+      return (!verdict || submission.verdict.includes(verdict)) && (!language || submission.language.includes(language));
+    });
+
+    return new Response(JSON.stringify({ data: filteredData }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
