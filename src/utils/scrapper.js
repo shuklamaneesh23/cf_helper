@@ -1,28 +1,43 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
 
-const scrapeCodeforcesSubmission = async (url) => {
+const categories = ['pupil', 'specialist', 'expert', 'candidate master', 'master', 'international master', 'grandmaster', 'international grandmaster', 'legendary grandmaster'];
+
+const scrapeCodeforcesProblemStatus = async (url) => {
   try {
-    const { data } = await axios.get(url);
-    const $ = cheerio.load(data);
+    const submissions = {};
+    let pageIndex = 1;
+    let categoriesFound = 0;
 
-    const submissionDetails = {};
+    while (pageIndex <= 500 && categoriesFound < categories.length) {
+      const currentPageUrl = `${url}/page/${pageIndex}?order=BY_PROGRAM_LENGTH_ASC`;
 
-    // Extract the verdict
-    submissionDetails.verdict = $('span.verdict-accepted').text().trim();
+      const { data } = await axios.get(currentPageUrl);
+      const $ = cheerio.load(data);
 
-    // Extract the programming language
-    submissionDetails.language = $('table td:contains("Programming Language") + td').text().trim();
+      $('table.status-frame-datatable tbody tr').each((index, element) => {
+        if (categoriesFound >= categories.length) return;
 
-    // Extract the source code
-    submissionDetails.sourceCode = $('#program-source-text').text().trim();
+        const submissionId = $(element).find('td:nth-child(1)').text().trim();
+        const authorTitle = $(element).find('td.status-party-cell a').attr('title');
+        const authorFirstWord = authorTitle ? authorTitle.split(' ')[0].toLowerCase() : 'unknown';
+        const language = $(element).find('td:nth-child(5)').text().trim();
+        const verdict = $(element).find('span.verdict-accepted').text().trim() || $(element).find('span.verdict').text().trim();
 
-    return submissionDetails;
+        if (!submissions[authorFirstWord] && categories.includes(authorFirstWord) && verdict === 'Accepted' && language === 'C++17 (GCC 7-32)') {
+          submissions[authorFirstWord] = { submissionId, author: authorFirstWord, language, verdict };
+          categoriesFound++;
+        }
+      });
+
+      pageIndex++;
+    }
+
+    return Object.values(submissions);
   } catch (error) {
     console.error("Error scraping website:", error);
     throw new Error("Failed to scrape website.");
   }
 };
 
-export { scrapeCodeforcesSubmission };
-//ffytf
+export { scrapeCodeforcesProblemStatus };
