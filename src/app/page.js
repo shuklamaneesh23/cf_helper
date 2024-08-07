@@ -61,7 +61,9 @@ export default function Home() {
       {result && (
         <div className="mt-4 w-full max-w-md bg-black p-4 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-2">Scraped Data:</h2>
-          <pre className="bg-gray-800 p-2 rounded-lg overflow-x-auto">{JSON.stringify(result, null, 2)}</pre>
+          <pre className="bg-gray-800 p-2 rounded-lg overflow-x-auto">
+            {result.sourceCode}
+          </pre>
         </div>
       )}
     </div>
