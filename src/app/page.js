@@ -8,6 +8,7 @@ export default function Home() {
   const [category, setCategory] = useState("");
   const [language, setLanguage] = useState("");
   const [result, setResult] = useState(null);
+  const [sourceCode, setSourceCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -35,6 +36,11 @@ export default function Home() {
     "JavaScript",
   ];
 
+  const maneesh = async () => {
+    console.log("Explain button clicked");
+    console.log("Result data:", result);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -57,6 +63,44 @@ export default function Home() {
       if (response.ok) {
         setResult(data.data);
         console.log(data.data);
+      } else {
+        setError(data.error || "An error occurred");
+      }
+    } catch (error) {
+      setError("An error occurred while fetching the data.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleExplainClick = async () => {
+    //   console.log("Explain button clicked");
+    // console.log("Result data:", result);
+
+    if (!result || result.length === 0) {
+      console.log("No result available");
+      return;
+    }
+
+    const url = result[0].submission;
+    setLoading(true);
+    setError("");
+
+    try {
+      console.log("manesh", url);
+      const response = await fetch("/api/codeExtraction", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ url }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSourceCode(data.data.sourceCode);
+        console.log(data.data.sourceCode);
       } else {
         setError(data.error || "An error occurred");
       }
@@ -142,20 +186,36 @@ export default function Home() {
                   </a>
                 </div>
                 <div className="mb-2">
-                  <a
-                    href={`https://codeforces.com/contest/${result[0].contestID}/submission/${result[0].submissionId}`} // Adjust URL as needed
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-blue-500 underline"
+                  <button
+                    onClick={handleExplainClick}
+                    className="text-blue-500 underline bg-transparent border-none cursor-pointer"
                   >
-                    Explain the code
-                  </a>
+                    Explain the Code
+                  </button>
                 </div>
               </div>
             ) : (
               <p>No results found.</p>
             )}
           </pre>
+        </div>
+      )}
+      {sourceCode && (
+        <div>
+          <div className="mt-4 w-full max-w-md bg-black p-4 rounded-lg shadow-md">
+            <h2 className="text-xl font-semibold mb-2">Source Code:</h2>
+            <pre className="bg-gray-800 p-2 rounded-lg overflow-x-auto">
+              {sourceCode}
+            </pre>
+          </div>
+          <div>
+            <button
+              onClick={maneesh}
+              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+            >
+              Explain
+            </button>
+          </div>
         </div>
       )}
     </div>
