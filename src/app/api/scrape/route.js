@@ -1,8 +1,8 @@
 import { scrapeCodeforcesProblemStatus } from '../../../utils/scrapper';
 
 export async function POST(req) {
-  const { url } = await req.json();
-
+  const { url, category,language } = await req.json();
+  
   if (!url) {
     return new Response(JSON.stringify({ error: 'URL is required' }), {
       status: 400,
@@ -10,9 +10,26 @@ export async function POST(req) {
     });
   }
 
-  // Validate the URL format
+  if (!category) {
+    return new Response(JSON.stringify({ error: 'Category is required' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  if (!language) {
+    return new Response(JSON.stringify({ error: 'Language is required' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+  
+
+  // Adjusted URL format pattern
   const urlPattern = /^https:\/\/codeforces\.com\/problemset\/status\/\d+\/problem\/[A-Z]$/;
   if (!urlPattern.test(url)) {
+    console.log('URL:', url);
+    console.log('URL Pattern Match:', urlPattern.test(url));
     return new Response(JSON.stringify({ error: 'Invalid URL format' }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' },
@@ -20,7 +37,7 @@ export async function POST(req) {
   }
 
   try {
-    const data = await scrapeCodeforcesProblemStatus(url);
+    const data = await scrapeCodeforcesProblemStatus(url,category,language);
 
     return new Response(JSON.stringify({ data }), {
       status: 200,
