@@ -9,8 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/google": "^0.0.33",
+    "@google/generative-ai": "^0.16.0",
+    "ai": "^3.3.3",
     "axios": "^1.7.2",
     "cheerio": "^1.0.0-rc.12",
+    "generative-ai": "^0.1.4",
     "next": "14.2.5",
     "puppeteer": "^22.14.0",
     "react": "^18",

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { parseStream } from "../utils/streaming";
 
 export default function Home() {
   const [contestID, setContestID] = useState("");
@@ -9,6 +10,7 @@ export default function Home() {
   const [language, setLanguage] = useState("");
   const [result, setResult] = useState(null);
   const [sourceCode, setSourceCode] = useState("");
+  const [explanation, setExplanation] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -37,8 +39,37 @@ export default function Home() {
   ];
 
   const maneesh = async () => {
-    console.log("Explain button clicked");
-    console.log("Result data:", result);
+    const sc = sourceCode;
+    const prompt = sc;
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("/api/explainCode", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt }),
+      });
+
+      if (response.ok) {
+        // Handle the streaming data
+        parseStream(response, (chunk) => {
+          let a =(chunk.replace(/\\n/g, '\n')); // Log the chunk
+          setExplanation(a);// Update explanation with new chunks
+        });
+      } else {
+        const errorData = await response.json();
+        setError(errorData.error || "An error occurred");
+      }
+    } catch (error) {
+      setError("An error occurred while fetching the data.");
+    } 
+    finally {
+      setLoading(false);
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -100,7 +131,8 @@ export default function Home() {
 
       if (response.ok) {
         setSourceCode(data.data.sourceCode);
-        console.log(data.data.sourceCode);
+
+        //console.log("yatin",sourceCode);
       } else {
         setError(data.error || "An error occurred");
       }
@@ -110,6 +142,10 @@ export default function Home() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    console.log("Updated sourceCode:", sourceCode); // Log when sourceCode updates
+  }, [sourceCode]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-800 p-4">
@@ -177,7 +213,7 @@ export default function Home() {
                 </div>
                 <div className="mb-2">
                   <a
-                    href={`https://codeforces.com/contest/${result[0].contestID}/submission/${result[0].submissionId}`} // Adjust URL as needed
+                    href={result[0].submission} // Adjust URL as needed
                     target="_blank"
                     rel="noreferrer"
                     className="text-blue-500 underline"
@@ -190,7 +226,7 @@ export default function Home() {
                     onClick={handleExplainClick}
                     className="text-blue-500 underline bg-transparent border-none cursor-pointer"
                   >
-                    Explain the Code
+                    View the Code
                   </button>
                 </div>
               </div>
@@ -216,6 +252,14 @@ export default function Home() {
               Explain
             </button>
           </div>
+        </div>
+      )}
+      {explanation && (
+        <div className="mt-4 w-full max-w-md bg-black p-4 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold mb-2">Explanation:</h2>
+          <pre className="bg-gray-800 p-2 rounded-lg overflow-x-auto">
+            {explanation}
+          </pre>
         </div>
       )}
     </div>
