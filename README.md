@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# CF Helper
+
+![Hacktoberfest](https://img.shields.io/badge/Hacktoberfest-2024-blueviolet?style=flat-square&logo=hacktoberfest)
+![Next.js](https://img.shields.io/badge/Next.js-v13.0+-black?style=flat-square&logo=next.js)
+![Gemini API](https://img.shields.io/badge/Gemini-API-red?style=flat-square&logo=graphql)
+![Cheerio](https://img.shields.io/badge/Cheerio-Web%20Scraping-yellowgreen?style=flat-square)
+
+## Introduction
+
+**CF Helper** is a web application designed to simplify the process of finding and understanding solutions to Codeforces problems. Built using **Next.js**, it leverages **Gemini API** for providing detailed explanations and **Cheerio** for web scraping solutions from the web.
+
+This project is open for contributions during **Hacktoberfest 2024**! Whether you're new to open source or an experienced developer, we welcome all contributions. 🎉
+
+## How It Works
+
+**CF Helper** works by allowing users to input specific criteria to find solutions for Codeforces problems. Here's how the process flows:
+
+1. **Input Criteria**:
+   - **Contest ID**: Specify the contest (e.g., 1234).
+   - **Problem Number**: Select the question by letter (e.g., A, B, C, etc.).
+   - **Preferred Language**: Supports a wide range of programming languages (C++, Python, Java, etc.).
+   - **Preferred Rating**: Choose a rating level (Newbie, Pupil, Expert, etc.).
+
+2. **Web Scraping**: Once you've entered the criteria, CF Helper uses **Cheerio** to scrape the web and fetch the exact solution that meets your preferences.
+
+3. **Solution Explanation**: After fetching the solution, CF Helper integrates with the **Gemini API** to provide a detailed, step-by-step explanation of the solution, if requested by the user.
+
+4. **Results**: You get the solution and the explanation delivered right to your screen, helping you understand the approach clearly and effectively.
+
+## Features
+
+- **Custom Problem Search**: Enter the contest ID, problem number, language, and rating level to get the exact solution you're looking for.
+- **Web Scraping**: Automatically fetches Codeforces problem solutions using Cheerio.
+- **Solution Explanation**: Provides detailed explanations via the Gemini API, helping you understand the logic behind the solution.
+- **Multi-language Support**: Find solutions in your preferred programming language.
+- **User-friendly Interface**: Easily navigate through the solutions and explanations with an intuitive UI.
+
+## Tech Stack
+
+- **Frontend**: [Next.js](https://nextjs.org/)
+- **Backend**: [Gemini API](https://gemini.com/)
+- **Web Scraping**: [Cheerio](https://cheerio.js.org/)
+- **Deployment**: [Cf-helper](https://cf-helper-peach.vercel.app)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+To run this project, you'll need a **Gemini API key**. Follow the instructions below to generate your API key:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Go to Gemini Website**: Click here [Gemini](https://ai.google.dev/gemini-api/docs/api-key?_gl=1*1klljxm*_up*MQ..&gclid=Cj0KCQjwmOm3BhC8ARIsAOSbapWP4oB-w6LcagtmEx3xpiPmTyKSX9lGIRtdn9jdgi5w-_jPmUOCI9caAmzcEALw_wcB&gbraid=0AAAAACn9t66MVbyJrz0E2MZ6eK9APnX1H).
+2. **Generate an API Key**: Read the steps given on this website to genrate an API key for generating gemini responses.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Setup Instructions
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+1. **Fork the repository**: Click the "Fork" button at the top of this page.
+2. **Clone your fork**:
+   ```bash
+   git clone https://github.com/your-username/cf_helper.git
+   ```
+3. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+4. **Create a .env file in the root directory of the project and add your Gemini API key**:
+   ```bash
+   GEMINI_API_KEY=your_api_key_here
 
-To learn more about Next.js, take a look at the following resources:
+   ```
+5. **Run the project locally**:
+   ```bash
+   npm run dev
+   ```
+   The app will be available at [http://localhost:3000](http://localhost:3000).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
+Check out the [Contributing Guide](Contributing.md) for more information.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Issues
 
-## Deploy on Vercel
+Feel free to submit issues and feature requests [here](https://github.com/shuklamaneesh23/cf_helper/issues).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+
+## Contact
+
+If you have any questions or need further assistance, feel free to open an issue or contact the maintainers.
+
+---
+
+Looking forward to your contributions! Let's make **CF Helper** better together this Hacktoberfest! 🌟
+
+---
