@@ -57,8 +57,8 @@ export default function Home() {
       if (response.ok) {
         // Handle the streaming data
         parseStream(response, (chunk) => {
-          let a =(chunk.replace(/\\n/g, '\n')); // Log the chunk
-          setExplanation(a);// Update explanation with new chunks
+          let a = chunk.replace(/\\n/g, "\n"); // Log the chunk
+          setExplanation(a); // Update explanation with new chunks
         });
       } else {
         const errorData = await response.json();
@@ -66,8 +66,7 @@ export default function Home() {
       }
     } catch (error) {
       setError("An error occurred while fetching the data.");
-    } 
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -164,7 +163,7 @@ export default function Home() {
           value={problemIndex}
           onChange={(e) => setProblemIndex(e.target.value)}
           placeholder="Enter Problem Index"
-          className="w-[31vw] h-[5vh] py-2 text-black border rounded-lg mb-4"
+          className="w-[31vw] h-[5vh] px-4 py-2 text-black border rounded-lg mb-4"
           required
         />
         <select
@@ -198,7 +197,7 @@ export default function Home() {
           className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
           disabled={loading}
         >
-          {loading ? "Scraping..." : "Scrape Submission"}
+          {loading ? "Scraping..." : "Get Submission"}
         </button>
       </form>
       {error && <p className="mt-4 text-red-500">{error}</p>}
