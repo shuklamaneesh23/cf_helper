@@ -57,8 +57,8 @@ export default function Home() {
       if (response.ok) {
         // Handle the streaming data
         parseStream(response, (chunk) => {
-          let a =(chunk.replace(/\\n/g, '\n')); // Log the chunk
-          setExplanation(a);// Update explanation with new chunks
+          let a = chunk.replace(/\\n/g, '\n'); // Log the chunk
+          setExplanation(a); // Update explanation with new chunks
         });
       } else {
         const errorData = await response.json();
@@ -66,8 +66,7 @@ export default function Home() {
       }
     } catch (error) {
       setError("An error occurred while fetching the data.");
-    } 
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -105,9 +104,6 @@ export default function Home() {
   };
 
   const handleExplainClick = async () => {
-    //   console.log("Explain button clicked");
-    // console.log("Result data:", result);
-
     if (!result || result.length === 0) {
       console.log("No result available");
       return;
@@ -131,8 +127,6 @@ export default function Home() {
 
       if (response.ok) {
         setSourceCode(data.data.sourceCode);
-
-        //console.log("yatin",sourceCode);
       } else {
         setError(data.error || "An error occurred");
       }
@@ -149,14 +143,14 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-800 p-4">
-      <h1 className="text-2xl font-bold mb-4">Codeforces Submission Scraper</h1>
+      <h1 className="text-2xl font-bold mb-4 ">Codeforces Submission Scraper</h1>
       <form onSubmit={handleSubmit} className="w-full max-w-md">
         <input
           type="text"
           value={contestID}
           onChange={(e) => setContestID(e.target.value)}
           placeholder="Enter Contest ID"
-          className="w-[31vw] h-[5vh] px-4 py-2 text-black border rounded-lg mb-4"
+          className="w-full h-[5vh] px-4 py-2 text-black border rounded-lg mb-4 "
           required
         />
         <input
@@ -164,13 +158,13 @@ export default function Home() {
           value={problemIndex}
           onChange={(e) => setProblemIndex(e.target.value)}
           placeholder="Enter Problem Index"
-          className="w-[31vw] h-[5vh] py-2 text-black border rounded-lg mb-4"
+          className="w-full h-[5vh] px-4 py-2 text-black border rounded-lg mb-4 "
           required
         />
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="w-[31vw] h-[5vh] px-4 py-2 text-black bg-white border rounded-lg mb-4"
+          className="w-full h-[5vh] px-4 py-2 text-black bg-white border rounded-lg mb-4 "
           required
         >
           <option value="">Select Category</option>
@@ -183,7 +177,7 @@ export default function Home() {
         <select
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
-          className="w-[31vw] h-[5vh] px-4 py-2 text-black bg-white border rounded-lg mb-4"
+          className="w-full h-[5vh] px-4 py-2 text-black bg-white border rounded-lg mb-4 "
           required
         >
           <option value="">Select Language</option>
@@ -195,7 +189,7 @@ export default function Home() {
         </select>
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+          className="w-full h-[5vh] bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 mb-4"
           disabled={loading}
         >
           {loading ? "Scraping..." : "Scrape Submission"}
@@ -247,7 +241,7 @@ export default function Home() {
           <div>
             <button
               onClick={maneesh}
-              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+              className="w-full h-[5vh] bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 mt-4"
             >
               Explain
             </button>
