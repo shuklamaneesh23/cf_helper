@@ -164,7 +164,7 @@ export default function Home() {
           value={problemIndex}
           onChange={(e) => setProblemIndex(e.target.value)}
           placeholder="Enter Problem Index"
-          className="w-[31vw] h-[5vh] py-2 text-black border rounded-lg mb-4"
+          className="w-[31vw] h-[5vh] px-4 py-2 text-black border rounded-lg mb-4"
           required
         />
         <select
