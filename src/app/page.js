@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { parseStream } from "../utils/streaming";
+import ThemeToggler from "./components/themeToggler";
 
 export default function Home() {
+  const [isDarkMode, setIsDarkMode] = useState(true); // State for dark mode
   const [contestID, setContestID] = useState("");
   const [problemIndex, setProblemIndex] = useState("");
   const [category, setCategory] = useState("");
@@ -57,8 +59,8 @@ export default function Home() {
       if (response.ok) {
         // Handle the streaming data
         parseStream(response, (chunk) => {
-          let a = chunk.replace(/\\n/g, '\n'); // Log the chunk
-          setExplanation(a); // Update explanation with new chunks
+          let a = chunk.replace(/\\n/g, '\n');
+          setExplanation(a); 
         });
       } else {
         const errorData = await response.json();
@@ -141,9 +143,21 @@ export default function Home() {
     console.log("Updated sourceCode:", sourceCode); // Log when sourceCode updates
   }, [sourceCode]);
 
+  // Function to toggle dark mode
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-800 p-4">
-      <h1 className="text-2xl font-bold mb-4 ">Codeforces Submission Scraper</h1>
+    <div className={`min-h-screen flex flex-col items-center justify-center ${isDarkMode ? "bg-gray-800" : "bg-gray-200"} p-4`}>
+      <div className="absolute top-4 right-7">
+        <ThemeToggler isDarkMode={isDarkMode} onToggle={toggleDarkMode} />
+      </div>
+
+      <h1 className={`text-2xl font-bold mb-4 ${isDarkMode ? "text-white" : "text-black"}`}>
+        Codeforces Submission Scraper
+      </h1>
+
       <form onSubmit={handleSubmit} className="w-full max-w-md">
         <input
           type="text"
@@ -207,7 +221,7 @@ export default function Home() {
                 </div>
                 <div className="mb-2">
                   <a
-                    href={result[0].submission} // Adjust URL as needed
+                    href={result[0].submission}
                     target="_blank"
                     rel="noreferrer"
                     className="text-blue-500 underline"
