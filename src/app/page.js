@@ -142,16 +142,15 @@ export default function Home() {
   }, [sourceCode]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-gray-800 to-black p-8">
-      <h1 className="text-5xl font-bold text-white mb-10 font-['Roboto']">Codeforces Submission Scraper</h1>
-      <form onSubmit={handleSubmit} className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-semibold text-gray-900 mb-6">Submit Problem Details</h2>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-800 p-4">
+      <h1 className="text-2xl font-bold mb-4 ">Codeforces Submission Scraper</h1>
+      <form onSubmit={handleSubmit} className="w-full max-w-md">
         <input
           type="text"
           value={contestID}
           onChange={(e) => setContestID(e.target.value)}
           placeholder="Enter Contest ID"
-          className="w-full h-12 px-4 py-2 text-black border border-gray-300 rounded-lg mb-4"
+          className="w-full h-[5vh] px-4 py-2 text-black border rounded-lg mb-4 font-bold"
           required
         />
         <input
@@ -159,13 +158,13 @@ export default function Home() {
           value={problemIndex}
           onChange={(e) => setProblemIndex(e.target.value)}
           placeholder="Enter Problem Index"
-          className="w-full h-12 px-4 py-2 text-black border border-gray-300 rounded-lg mb-4"
+          className="w-full h-[5vh] px-4 py-2 text-black border rounded-lg mb-4 font-bold"
           required
         />
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="w-full h-12 px-4 py-2 pr-8 text-black border border-gray-300 rounded-lg mb-4 "
+          className="w-full h-[5vh] px-4 py-2 text-black bg-white border rounded-lg mb-4 font-bold"
           required
         >
           <option value="">Select Category</option>
@@ -178,7 +177,7 @@ export default function Home() {
         <select
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
-          className="w-full h-12 px-4 py-2 pr-8 text-black border border-gray-300 rounded-lg mb-4"
+          className="w-full h-[5vh] px-4 py-2 text-black bg-white border rounded-lg mb-4 font-bold"
           required
         >
           <option value="">Select Language</option>
@@ -190,7 +189,7 @@ export default function Home() {
         </select>
         <button
           type="submit"
-          className="w-full font-semibold bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600"
+          className="w-full h-[5vh] bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 font-bold mb-4"
           disabled={loading}
         >
           {loading ? "Scraping..." : "Scrape Submission"}

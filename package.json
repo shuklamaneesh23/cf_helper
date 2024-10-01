@@ -15,6 +15,7 @@
     "axios": "^1.7.2",
     "cf_out_of_bounds": "file:",
     "cheerio": "^1.0.0",
+    "dotenv": "^16.4.5",
     "generative-ai": "^0.1.4",
     "next": "14.2.5",
     "puppeteer": "^22.14.0",
