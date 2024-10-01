@@ -148,15 +148,15 @@ export default function Home() {
   }, [sourceCode]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-800 p-4">
-      <h1 className="text-2xl font-bold mb-4">Codeforces Submission Scraper</h1>
-      <form onSubmit={handleSubmit} className="w-full max-w-md">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-800 p-4 sm:p-6 md:p-8">
+      <h1 className="w-full max-w-md mx-auto px-4 text-xl sm:text-2xl md:text-3xl mb-4 font-bold text-white text-center">Codeforces Submission Scraper</h1>
+      <form onSubmit={handleSubmit} className="w-full max-w-md mx-auto px-4">
         <input
           type="text"
           value={contestID}
           onChange={(e) => setContestID(e.target.value)}
           placeholder="Enter Contest ID"
-          className="w-[31vw] h-[5vh] px-4 py-2 text-black border rounded-lg mb-4"
+          className="w-full h-12 px-4 py-2 text-black border rounded-lg mb-4"
           required
         />
         <input
@@ -164,13 +164,13 @@ export default function Home() {
           value={problemIndex}
           onChange={(e) => setProblemIndex(e.target.value)}
           placeholder="Enter Problem Index"
-          className="w-[31vw] h-[5vh] py-2 text-black border rounded-lg mb-4"
+          className="w-full h-12 px-4 py-2 text-black border rounded-lg mb-4"
           required
         />
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="w-[31vw] h-[5vh] px-4 py-2 text-black bg-white border rounded-lg mb-4"
+          className="w-full h-12 px-4 py-2 text-black border rounded-lg mb-4"
           required
         >
           <option value="">Select Category</option>
@@ -183,7 +183,7 @@ export default function Home() {
         <select
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
-          className="w-[31vw] h-[5vh] px-4 py-2 text-black bg-white border rounded-lg mb-4"
+          className="w-full h-12 px-4 py-2 text-black border rounded-lg mb-4"
           required
         >
           <option value="">Select Language</option>
@@ -195,7 +195,7 @@ export default function Home() {
         </select>
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+          className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition-colors duration-300"
           disabled={loading}
         >
           {loading ? "Scraping..." : "Scrape Submission"}
@@ -207,16 +207,19 @@ export default function Home() {
           <h2 className="text-xl font-semibold mb-2">Results:</h2>
           <pre className="bg-gray-800 p-2 rounded-lg overflow-x-auto">
             {result.length > 0 ? (
-              <div>
-                <div className="mb-2">
-                  <strong>Author:</strong> {result[0].author}
+              <div className="space-y-2 text-sm sm:text-base">
+                <div className="flex flex-wrap items-center">
+                  <strong className="mr-2 text-white">Author:</strong> 
+                  <span className="text-gray-300">
+                    {result[0].author}
+                  </span>
                 </div>
-                <div className="mb-2">
+                <div>
                   <a
                     href={result[0].submission} // Adjust URL as needed
                     target="_blank"
                     rel="noreferrer"
-                    className="text-blue-500 underline"
+                    className="text-blue-400 hover:text-blue-300 underline transition-colors duration-300"
                   >
                     View Submission
                   </a>
@@ -224,20 +227,20 @@ export default function Home() {
                 <div className="mb-2">
                   <button
                     onClick={handleExplainClick}
-                    className="text-blue-500 underline bg-transparent border-none cursor-pointer"
+                    className="text-blue-400 hover:text-blue-300 underline bg-transparent border-none cursor-pointer transition-colors duration-300"
                   >
                     View the Code
                   </button>
                 </div>
               </div>
             ) : (
-              <p>No results found.</p>
+              <p className="text-gray-300">No results found.</p>
             )}
           </pre>
         </div>
       )}
       {sourceCode && (
-        <div>
+        <div className="mt-4 w-full max-w-md">
           <div className="mt-4 w-full max-w-md bg-black p-4 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-2">Source Code:</h2>
             <pre className="bg-gray-800 p-2 rounded-lg overflow-x-auto">
