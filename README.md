@@ -16,10 +16,10 @@ This project is open for contributions during **Hacktoberfest 2024**! Whether yo
 **CF Helper** works by allowing users to input specific criteria to find solutions for Codeforces problems. Here's how the process flows:
 
 1. **Input Criteria**:
-   - **Contest ID**: Specify the contest (e.g., 1234).
+   - **Contest ID**: Specify the contest id (e.g., 1234), visible in the url of contest.
    - **Problem Number**: Select the question by letter (e.g., A, B, C, etc.).
    - **Preferred Language**: Supports a wide range of programming languages (C++, Python, Java, etc.).
-   - **Preferred Rating**: Choose a rating level (Newbie, Pupil, Expert, etc.).
+   - **Preferred Rating**: Choose a rating level (Newbie, Pupil, Expert, etc.) whose solution you wish to view.
 
 2. **Web Scraping**: Once you've entered the criteria, CF Helper uses **Cheerio** to scrape the web and fetch the exact solution that meets your preferences.
 
@@ -49,7 +49,7 @@ This project is open for contributions during **Hacktoberfest 2024**! Whether yo
 To run this project, you'll need a **Gemini API key**. Follow the instructions below to generate your API key:
 
 1. **Go to Gemini Website**: Click here [Gemini](https://ai.google.dev/gemini-api/docs/api-key?_gl=1*1klljxm*_up*MQ..&gclid=Cj0KCQjwmOm3BhC8ARIsAOSbapWP4oB-w6LcagtmEx3xpiPmTyKSX9lGIRtdn9jdgi5w-_jPmUOCI9caAmzcEALw_wcB&gbraid=0AAAAACn9t66MVbyJrz0E2MZ6eK9APnX1H).
-2. **Generate an API Key**: Read the steps given on this website to genrate an API key for generating gemini responses.
+2. **Generate an API Key**: Read the steps given on this website to generate an API key for generating gemini responses.
 
 ### Setup Instructions
 
@@ -65,7 +65,7 @@ To run this project, you'll need a **Gemini API key**. Follow the instructions b
    ```
 4. **Create a .env file in the root directory of the project and add your Gemini API key**:
    ```bash
-   GEMINI_API_KEY=your_api_key_here
+   YOUR_API_KEY=your_api_key_here
 
    ```
 5. **Run the project locally**:
