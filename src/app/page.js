@@ -57,7 +57,7 @@ export default function Home() {
       if (response.ok) {
         // Handle the streaming data
         parseStream(response, (chunk) => {
-          let a = chunk.replace(/\\n/g, '\n'); // Log the chunk
+          let a = chunk.replace(/\\n/g, "\n"); // Log the chunk
           setExplanation(a); // Update explanation with new chunks
         });
       } else {
@@ -143,9 +143,16 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-gray-800 to-black p-8">
-      <h1 className="text-5xl font-bold text-white mb-10 font-['Roboto']">Codeforces Submission Scraper</h1>
-      <form onSubmit={handleSubmit} className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-semibold text-gray-900 mb-6">Submit Problem Details</h2>
+      <h1 className="text-5xl font-bold text-white mb-10 font-['Roboto']">
+        Codeforces Submission Scraper
+      </h1>
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg"
+      >
+        <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+          Submit Problem Details
+        </h2>
         <input
           type="text"
           value={contestID}
@@ -193,7 +200,7 @@ export default function Home() {
           className="w-full font-semibold bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600"
           disabled={loading}
         >
-          {loading ? "Scraping..." : "Scrape Submission"}
+          {loading ? "Scraping..." : "Get Submission"}
         </button>
       </form>
       {error && <p className="mt-4 text-red-500">{error}</p>}
@@ -234,7 +241,9 @@ export default function Home() {
       {sourceCode && (
         <div>
           <div className="mt-4 w-full max-w-md bg-black p-4 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold mb-2 text-white">Source Code:</h2>
+            <h2 className="text-xl font-semibold mb-2 text-white">
+              Source Code:
+            </h2>
             <pre className="bg-gray-800 p-2 rounded-lg overflow-x-auto text-white">
               {sourceCode}
             </pre>
@@ -251,7 +260,9 @@ export default function Home() {
       )}
       {explanation && (
         <div className="mt-4 w-full max-w-md bg-black p-4 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-2 text-white">Explanation:</h2>
+          <h2 className="text-xl font-semibold mb-2 text-white">
+            Explanation:
+          </h2>
           <pre className="bg-gray-800 p-2 rounded-lg overflow-x-auto text-white">
             {explanation}
           </pre>
