@@ -57,8 +57,8 @@ export default function Home() {
       if (response.ok) {
         // Handle the streaming data
         parseStream(response, (chunk) => {
-          let a =(chunk.replace(/\\n/g, '\n')); // Log the chunk
-          setExplanation(a);// Update explanation with new chunks
+          let a = chunk.replace(/\\n/g, '\n'); // Log the chunk
+          setExplanation(a); // Update explanation with new chunks
         });
       } else {
         const errorData = await response.json();
@@ -66,8 +66,7 @@ export default function Home() {
       }
     } catch (error) {
       setError("An error occurred while fetching the data.");
-    } 
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -105,9 +104,6 @@ export default function Home() {
   };
 
   const handleExplainClick = async () => {
-    //   console.log("Explain button clicked");
-    // console.log("Result data:", result);
-
     if (!result || result.length === 0) {
       console.log("No result available");
       return;
@@ -131,8 +127,6 @@ export default function Home() {
 
       if (response.ok) {
         setSourceCode(data.data.sourceCode);
-
-        //console.log("yatin",sourceCode);
       } else {
         setError(data.error || "An error occurred");
       }
@@ -152,7 +146,6 @@ export default function Home() {
       <h1 className="text-5xl font-bold text-white mb-10 font-['Roboto']">Codeforces Submission Scraper</h1>
       <form onSubmit={handleSubmit} className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
       <h2 className="text-2xl font-semibold text-gray-900 mb-6">Submit Problem Details</h2>
-
         <input
           type="text"
           value={contestID}
@@ -249,7 +242,7 @@ export default function Home() {
           <div>
             <button
               onClick={maneesh}
-              className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+              className="w-full h-[5vh] bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 mt-4"
             >
               Explain
             </button>
