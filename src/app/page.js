@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { parseStream } from "../utils/streaming";
+import { parseStream } from "@/utils/streaming";
+import ThemeToggler from "@/components/themetoggler"; 
 
 export default function Home() {
+  const [isDarkMode, setIsDarkMode] = useState(true); 
   const [contestID, setContestID] = useState("");
   const [problemIndex, setProblemIndex] = useState("");
   const [category, setCategory] = useState("");
@@ -55,10 +57,9 @@ export default function Home() {
       });
 
       if (response.ok) {
-        // Handle the streaming data
         parseStream(response, (chunk) => {
-          let a = chunk.replace(/\\n/g, '\n'); // Log the chunk
-          setExplanation(a); // Update explanation with new chunks
+          let a = chunk.replace(/\\n/g, '\n');
+          setExplanation(a); 
         });
       } else {
         const errorData = await response.json();
@@ -92,7 +93,6 @@ export default function Home() {
 
       if (response.ok) {
         setResult(data.data);
-        console.log(data.data);
       } else {
         setError(data.error || "An error occurred");
       }
@@ -114,7 +114,6 @@ export default function Home() {
     setError("");
 
     try {
-      console.log("manesh", url);
       const response = await fetch("/api/codeExtraction", {
         method: "POST",
         headers: {
@@ -138,14 +137,30 @@ export default function Home() {
   };
 
   useEffect(() => {
-    console.log("Updated sourceCode:", sourceCode); // Log when sourceCode updates
+    console.log("Updated sourceCode:", sourceCode); 
   }, [sourceCode]);
 
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-gray-800 to-black p-8">
-      <h1 className="text-5xl font-bold text-white mb-10 font-['Roboto']">Codeforces Submission Scraper</h1>
-      <form onSubmit={handleSubmit} className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-semibold text-gray-900 mb-6">Submit Problem Details</h2>
+    <div
+      className={`min-h-screen flex flex-col items-center justify-center p-8 ${
+        isDarkMode ? "bg-gradient-to-r from-gray-800 to-black p-8" : "bg-gray-100 text-black"
+      }`}
+    >
+      {/* Theme toggler button */}
+      <div className="absolute top-4 right-7 ">
+        <ThemeToggler isDarkMode={isDarkMode} onToggle={toggleDarkMode} />
+      </div>
+
+      <h1 className="text-5xl font-bold mb-10 font-['Roboto']">Codeforces Submission Scraper</h1>
+
+      <form onSubmit={handleSubmit} className={`w-full max-w-md p-8 rounded-lg shadow-lg ${isDarkMode ? "bg-gray-800" : "bg-white"}`}>
+        <h2 className={`text-2xl font-semibold mb-6 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+          Submit Problem Details
+        </h2>
         <input
           type="text"
           value={contestID}
@@ -196,22 +211,25 @@ export default function Home() {
           {loading ? "Scraping..." : "Scrape Submission"}
         </button>
       </form>
+
       {error && <p className="mt-4 text-red-500">{error}</p>}
       {result && (
-        <div className="mt-4 w-full max-w-md bg-black p-4 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-2 text-white">Results:</h2>
-          <pre className="bg-gray-800 p-2 rounded-lg overflow-x-auto text-white">
+        <div className={`mt-4 w-full max-w-md  p-4 rounded-lg shadow-md
+        ${isDarkMode? "bg-black":"bg-gray-400" }`}>
+          <h2 className={`text-xl font-semibold mb-2 text-white`}>Results:</h2>
+          <pre className={` p-2 rounded-lg overflow-x-auto text-white
+            ${isDarkMode? "bg-gray-800":"bg-white"}`}>
             {result.length > 0 ? (
               <div>
-                <div className="mb-2">
+                <div className={`mb-2 ${isDarkMode? "text-white": "text-black"}`}>
                   <strong>Author:</strong> {result[0].author}
                 </div>
                 <div className="mb-2">
                   <a
-                    href={result[0].submission} // Adjust URL as needed
+                    href={result[0].submission}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-blue-500 underline"
+                    className={` underline ${isDarkMode? "text-blue-500": "text-blue-700"}`}
                   >
                     View Submission
                   </a>
@@ -219,7 +237,7 @@ export default function Home() {
                 <div className="mb-2">
                   <button
                     onClick={handleExplainClick}
-                    className="text-blue-500 underline bg-transparent border-none cursor-pointer"
+                    className={` underline bg-transparent border-none cursor-pointer ${isDarkMode? "text-blue-500 ": "text-blue-700"}`}
                   >
                     View the Code
                   </button>
@@ -231,6 +249,7 @@ export default function Home() {
           </pre>
         </div>
       )}
+
       {sourceCode && (
         <div>
           <div className="mt-4 w-full max-w-md bg-black p-4 rounded-lg shadow-md">
@@ -249,6 +268,7 @@ export default function Home() {
           </div>
         </div>
       )}
+
       {explanation && (
         <div className="mt-4 w-full max-w-md bg-black p-4 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold mb-2 text-white">Explanation:</h2>
