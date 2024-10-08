@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { parseStream } from "@/utils/streaming";
-import ThemeToggler from "@/components/themetoggler"; 
+import ThemeToggler from "@/components/themetoggler";
 
 export default function Home() {
-  const [isDarkMode, setIsDarkMode] = useState(true); 
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [contestID, setContestID] = useState("");
   const [problemIndex, setProblemIndex] = useState("");
   const [category, setCategory] = useState("");
@@ -58,8 +58,8 @@ export default function Home() {
 
       if (response.ok) {
         parseStream(response, (chunk) => {
-          let a = chunk.replace(/\\n/g, '\n');
-          setExplanation(a); 
+          let a = chunk.replace(/\\n/g, "\n");
+          setExplanation(a);
         });
       } else {
         const errorData = await response.json();
@@ -137,7 +137,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    console.log("Updated sourceCode:", sourceCode); 
+    console.log("Updated sourceCode:", sourceCode);
   }, [sourceCode]);
 
   const toggleDarkMode = () => {
@@ -147,7 +147,9 @@ export default function Home() {
   return (
     <div
       className={`min-h-screen flex flex-col items-center justify-center p-8 ${
-        isDarkMode ? "bg-gradient-to-r from-gray-800 to-black p-8" : "bg-gray-100 text-black"
+        isDarkMode
+          ? "bg-gradient-to-r from-gray-800 to-black p-8"
+          : "bg-gray-100 text-black"
       }`}
     >
       {/* Theme toggler button */}
@@ -155,10 +157,21 @@ export default function Home() {
         <ThemeToggler isDarkMode={isDarkMode} onToggle={toggleDarkMode} />
       </div>
 
-      <h1 className="text-5xl font-bold mb-10 font-['Roboto']">Codeforces Submission Scraper</h1>
+      <h1 className="text-5xl font-bold mb-10 font-['Roboto']">
+        Codeforces Submission Scraper
+      </h1>
 
-      <form onSubmit={handleSubmit} className={`w-full max-w-md p-8 rounded-lg shadow-lg ${isDarkMode ? "bg-gray-800" : "bg-white"}`}>
-        <h2 className={`text-2xl font-semibold mb-6 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+      <form
+        onSubmit={handleSubmit}
+        className={`w-full max-w-md p-8 rounded-lg shadow-lg ${
+          isDarkMode ? "bg-gray-800" : "bg-white"
+        }`}
+      >
+        <h2
+          className={`text-2xl font-semibold mb-6 ${
+            isDarkMode ? "text-white" : "text-gray-900"
+          }`}
+        >
           Submit Problem Details
         </h2>
         <input
@@ -208,20 +221,26 @@ export default function Home() {
           className="w-full font-semibold bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600"
           disabled={loading}
         >
-          {loading ? "Scraping..." : "Scrape Submission"}
+          {loading ? "Scraping..." : "Retrieve Submission"}
         </button>
       </form>
 
       {error && <p className="mt-4 text-red-500">{error}</p>}
       {result && (
-        <div className={`mt-4 w-full max-w-md  p-4 rounded-lg shadow-md
-        ${isDarkMode? "bg-black":"bg-gray-400" }`}>
+        <div
+          className={`mt-4 w-full max-w-md  p-4 rounded-lg shadow-md
+        ${isDarkMode ? "bg-black" : "bg-gray-400"}`}
+        >
           <h2 className={`text-xl font-semibold mb-2 text-white`}>Results:</h2>
-          <pre className={` p-2 rounded-lg overflow-x-auto text-white
-            ${isDarkMode? "bg-gray-800":"bg-white"}`}>
+          <pre
+            className={` p-2 rounded-lg overflow-x-auto text-white
+            ${isDarkMode ? "bg-gray-800" : "bg-white"}`}
+          >
             {result.length > 0 ? (
               <div>
-                <div className={`mb-2 ${isDarkMode? "text-white": "text-black"}`}>
+                <div
+                  className={`mb-2 ${isDarkMode ? "text-white" : "text-black"}`}
+                >
                   <strong>Author:</strong> {result[0].author}
                 </div>
                 <div className="mb-2">
@@ -229,7 +248,9 @@ export default function Home() {
                     href={result[0].submission}
                     target="_blank"
                     rel="noreferrer"
-                    className={` underline ${isDarkMode? "text-blue-500": "text-blue-700"}`}
+                    className={` underline ${
+                      isDarkMode ? "text-blue-500" : "text-blue-700"
+                    }`}
                   >
                     View Submission
                   </a>
@@ -237,7 +258,9 @@ export default function Home() {
                 <div className="mb-2">
                   <button
                     onClick={handleExplainClick}
-                    className={` underline bg-transparent border-none cursor-pointer ${isDarkMode? "text-blue-500 ": "text-blue-700"}`}
+                    className={` underline bg-transparent border-none cursor-pointer ${
+                      isDarkMode ? "text-blue-500 " : "text-blue-700"
+                    }`}
                   >
                     View the Code
                   </button>
@@ -253,7 +276,9 @@ export default function Home() {
       {sourceCode && (
         <div>
           <div className="mt-4 w-full max-w-md bg-black p-4 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold mb-2 text-white">Source Code:</h2>
+            <h2 className="text-xl font-semibold mb-2 text-white">
+              Source Code:
+            </h2>
             <pre className="bg-gray-800 p-2 rounded-lg overflow-x-auto text-white">
               {sourceCode}
             </pre>
@@ -271,7 +296,9 @@ export default function Home() {
 
       {explanation && (
         <div className="mt-4 w-full max-w-md bg-black p-4 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-2 text-white">Explanation:</h2>
+          <h2 className="text-xl font-semibold mb-2 text-white">
+            Explanation:
+          </h2>
           <pre className="bg-gray-800 p-2 rounded-lg overflow-x-auto text-white">
             {explanation}
           </pre>
