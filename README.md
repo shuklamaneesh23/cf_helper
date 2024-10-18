@@ -65,6 +65,26 @@ This project is open for contributions during **Hacktoberfest 2024**! Whether yo
 - **Multi-language Support**: Find solutions in your preferred programming language.
 - **User-friendly Interface**: Easily navigate through the solutions and explanations with an intuitive UI.
 
+<div align="center">
+  <table>
+    <h2 id="preview">Preview</h2>
+    <tr>
+      <td>
+        <img src="./src/assets/preview1.png" alt="Home Page Dark">
+      </td>
+      <td>
+        <img src="./src/assets/preview2.png" alt="Home Page Light">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <img src="./src/assets/preview3.png" alt="Result Page">
+      </td>
+    </tr>
+  </table>
+</div>
+
+
 ## Tech Stack
 
 - **Frontend**: [Next.js](https://nextjs.org/)
