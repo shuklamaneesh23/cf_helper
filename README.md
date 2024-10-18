@@ -25,6 +25,7 @@
 <a href="#introduction"><kbd><br>&emsp;Introduction&emsp;<br><br></kbd></a>&emsp;
 <a href="#how-it-works"><kbd><br>&emsp;How It Works&emsp;<br><br></kbd></a>&emsp;
 <a href="#features"><kbd><br>&emsp;Features&emsp;<br><br></kbd></a>&emsp;
+<a href="#preview"><kbd><br>&emsp;Preview&emsp;<br><br></kbd></a>&emsp;
 <a href="#tech-stack"><kbd><br>&emsp;Tech Stack&emsp;<br><br></kbd></a>&emsp;
 <a href="#getting-started"><kbd><br>&emsp;Getting Started&emsp;<br><br></kbd></a>&emsp;
 <a href="#issues"><kbd><br>&emsp;Issues&emsp;<br><br></kbd></a>&emsp;
@@ -64,6 +65,8 @@ This project is open for contributions during **Hacktoberfest 2024**! Whether yo
 - **Solution Explanation**: Provides detailed explanations via the Gemini API, helping you understand the logic behind the solution.
 - **Multi-language Support**: Find solutions in your preferred programming language.
 - **User-friendly Interface**: Easily navigate through the solutions and explanations with an intuitive UI.
+
+## Preview
 
 <div align="center">
   <table>
