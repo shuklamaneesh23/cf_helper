@@ -14,7 +14,7 @@ export default function ThemeToggler({ isDarkMode, onToggle }) {
 
         {/* Sun icon, visible when not in dark mode */}
         <svg
-          className={`swap-off h-10 w-10 fill-current text-yellow-400 ${isDarkMode ? 'hidden' : 'block'}`}
+          className={`swap-off h-10 w-10 fill-current text-yellow-400 ${isDarkMode ? 'hidden' : 'block'} cursor-pointer`}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
@@ -23,7 +23,7 @@ export default function ThemeToggler({ isDarkMode, onToggle }) {
 
         {/* Moon icon, visible when in dark mode */}
         <svg
-          className={`swap-on h-10 w-10 fill-current text-blue-600 ${isDarkMode ? 'block' : 'hidden'}`}
+          className={`swap-on h-10 w-10 fill-current text-blue-600 ${isDarkMode ? 'block' : 'hidden'} cursor-pointer`}
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
