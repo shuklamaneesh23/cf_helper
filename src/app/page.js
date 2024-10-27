@@ -17,8 +17,8 @@ export default function Home() {
   const [error, setError] = useState("");
 
   const categories = [
-    "pupil",
     "newbie",
+    "pupil",
     "specialist",
     "expert",
     "candidate master",
