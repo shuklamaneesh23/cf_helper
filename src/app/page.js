@@ -155,6 +155,18 @@ export default function Home() {
         <ThemeToggler isDarkMode={isDarkMode} onToggle={toggleDarkMode} />
       </div>
 
+      {/* Logo */}
+      {isDarkMode && (
+        <div className="absolute top-4 left-3">
+          <Image src="/logo2dark.png" alt="Logo" width={250} height={250} className="p-0.5" />
+        </div>
+      )}
+      {!isDarkMode && (
+        <div className="absolute top-4 left-3">
+          <Image src="/logo2light.png" alt="Logo" width={250} height={250} className="p-0.5" />
+        </div>
+      )}
+
       <h1 className="text-5xl font-bold mb-10 font-['Roboto']">Codeforces Submission Scraper</h1>
 
       <form onSubmit={handleSubmit} className={`w-full max-w-md p-8 rounded-lg shadow-lg ${isDarkMode ? "bg-gray-800" : "bg-white"}`}>
