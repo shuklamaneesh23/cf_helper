@@ -220,7 +220,7 @@ export default function Home() {
           className="w-full font-semibold bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600"
           disabled={loading}
         >
-          {loading ? "Scraping..." : "Scrape Submission"}
+          {loading ? "Scraping..." : "Retrieve Submission"}
         </button>
       </form>
 
