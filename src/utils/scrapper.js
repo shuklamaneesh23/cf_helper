@@ -1,8 +1,8 @@
 import axios from "axios";
 import { load } from "cheerio"; // Import load function directly
 
-const scrapeCodeforcesProblemStatus = async (url, category, language) => {
-  console.log("lang", language);
+const scrapeCodeforcesProblemStatus = async (url, category, languageList) => {
+  console.log("languages:", languageList);
   const categories = [category];
 
   try {
@@ -44,7 +44,7 @@ const scrapeCodeforcesProblemStatus = async (url, category, language) => {
             !submissions[authorFirstWord] &&
             categories.includes(authorFirstWord) &&
             verdict === "Accepted" &&
-            lang === language
+            languageList.includes(lang) // lang can be any language in the selected Language Category List (Ex. "C++"/"Python"/etc.)
           ) {
             submissions[authorFirstWord] = {
               submission: `https://codeforces.com/contest/${url.split("/")[5]}/submission/${submissionId}`,

@@ -3,14 +3,14 @@
 import { useState, useEffect } from "react";
 import { parseStream } from "@/utils/streaming";
 import ThemeToggler from "@/components/themetoggler"; 
-import { categories, languages } from "../utils/constants";
+import { categories, languageCategories } from "../utils/constants";
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(true); 
   const [contestID, setContestID] = useState("");
   const [problemIndex, setProblemIndex] = useState("");
   const [category, setCategory] = useState("");
-  const [language, setLanguage] = useState("");
+  const [baseLanguage, setBaseLanguage] = useState("");
   const [result, setResult] = useState(null);
   const [sourceCode, setSourceCode] = useState("");
   const [explanation, setExplanation] = useState("");
@@ -58,12 +58,14 @@ export default function Home() {
     const url = `https://codeforces.com/problemset/status/${contestID}/problem/${problemIndex}`;
 
     try {
+      const selectedLanguages = languageCategories[baseLanguage] || []; // baseLanguage is a string like "C++" or "Python" (a valid key from languageCategories)
+
       const response = await fetch("/api/scrape", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ url, category, language }),
+        body: JSON.stringify({ url, category, languageList: selectedLanguages }),
       });
 
       const data = await response.json();
@@ -180,15 +182,15 @@ export default function Home() {
           ))}
         </select>
         <select
-          value={language}
-          onChange={(e) => setLanguage(e.target.value)}
+          value={baseLanguage}
+          onChange={(e) => setBaseLanguage(e.target.value)}
           className="w-full h-12 px-4 py-2 pr-8 text-black border border-gray-300 rounded-lg mb-4"
           required
         >
           <option value="">Select Language</option>
-          {languages.map((lang) => (
-            <option key={lang} value={lang}>
-              {lang}
+          {Object.keys(languageCategories).map((baseLang) => (
+            <option key={baseLang} value={baseLang}>
+              {baseLang}
             </option>
           ))}
         </select>
