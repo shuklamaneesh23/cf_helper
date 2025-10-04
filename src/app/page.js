@@ -2,14 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { parseStream } from "@/utils/streaming";
-import ThemeToggler from "@/components/themetoggler"; 
+import ThemeToggler from "@/components/themetoggler";
+import Image from 'next/image';
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(true); 
   const [contestID, setContestID] = useState("");
   const [problemIndex, setProblemIndex] = useState("");
   const [category, setCategory] = useState("");
-  const [language, setLanguage] = useState("");
+  const [baseLanguage, setBaseLanguage] = useState("");
   const [result, setResult] = useState(null);
   const [sourceCode, setSourceCode] = useState("");
   const [explanation, setExplanation] = useState("");
@@ -29,16 +30,13 @@ export default function Home() {
     "legendary grandmaster",
   ];
 
-  const languages = [
-    "PyPy 3-64",
-    "C++17 (GCC 7-32)",
-    "Python 3",
-    "PyPy 3",
-    "C++14 (GCC 6-32)",
-    "C++20 (GCC 13-64)",
-    "Java 21",
-    "JavaScript",
-  ];
+  const languageCategories = {
+    PyPy: ["PyPy 3-64", "PyPy 3"],
+    "C++": ["C++17 (GCC 7-32)", "C++14 (GCC 6-32)", "C++20 (GCC 13-64)"],
+    Python: ["Python 3"],
+    Java: ["Java 21"],
+    JavaScript: ["JavaScript"]
+  };
 
   const maneesh = async () => {
     const sc = sourceCode;
@@ -81,12 +79,14 @@ export default function Home() {
     const url = `https://codeforces.com/problemset/status/${contestID}/problem/${problemIndex}`;
 
     try {
+      const selectedLanguages = languageCategories[baseLanguage] || []; // baseLanguage is a string like "C++" or "Python" (a valid key from languageCategories)
+
       const response = await fetch("/api/scrape", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ url, category, language }),
+        body: JSON.stringify({ url, category, languageList: selectedLanguages }),
       });
 
       const data = await response.json();
@@ -192,7 +192,7 @@ export default function Home() {
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="w-full h-12 px-4 py-2 pr-8 text-black border border-gray-300 rounded-lg mb-4 "
+          className="w-full h-12 px-4 py-2 pr-8 text-black border border-gray-300 rounded-lg mb-4"
           required
         >
           <option value="">Select Category</option>
@@ -203,15 +203,15 @@ export default function Home() {
           ))}
         </select>
         <select
-          value={language}
-          onChange={(e) => setLanguage(e.target.value)}
+          value={baseLanguage}
+          onChange={(e) => setBaseLanguage(e.target.value)}
           className="w-full h-12 px-4 py-2 pr-8 text-black border border-gray-300 rounded-lg mb-4"
           required
         >
           <option value="">Select Language</option>
-          {languages.map((lang) => (
-            <option key={lang} value={lang}>
-              {lang}
+          {Object.keys(languageCategories).map((baseLang) => (
+            <option key={baseLang} value={baseLang}>
+              {baseLang}
             </option>
           ))}
         </select>
@@ -233,7 +233,7 @@ export default function Home() {
             ${isDarkMode? "bg-gray-800":"bg-white"}`}>
             {result.length > 0 ? (
               <div>
-                <div className={`mb-2 ${isDarkMode? "text-white": "text-black"}`}>
+                <div className={`mb-2 ${isDarkMode ? "text-white" : "text-black"}`}>
                   <strong>Author:</strong> {result[0].author}
                 </div>
                 <div className="mb-2">
@@ -241,7 +241,7 @@ export default function Home() {
                     href={result[0].submission}
                     target="_blank"
                     rel="noreferrer"
-                    className={` underline ${isDarkMode? "text-blue-500": "text-blue-700"}`}
+                    className={` underline ${isDarkMode ? "text-blue-500" : "text-blue-700"}`}
                   >
                     View Submission
                   </a>
@@ -249,7 +249,7 @@ export default function Home() {
                 <div className="mb-2">
                   <button
                     onClick={handleExplainClick}
-                    className={` underline bg-transparent border-none cursor-pointer ${isDarkMode? "text-blue-500 ": "text-blue-700"}`}
+                    className={` underline bg-transparent border-none cursor-pointer ${isDarkMode ? "text-blue-500 " : "text-blue-700"}`}
                   >
                     View the Code
                   </button>
