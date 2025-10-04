@@ -1,8 +1,8 @@
 import { scrapeCodeforcesProblemStatus } from '../../../utils/scrapper';
 
 export async function POST(req) {
-  const { url, category, languageList} = await req.json();
-  
+  const { url, category, language } = await req.json();
+
   if (!url) {
     return new Response(JSON.stringify({ error: 'URL is required' }), {
       status: 400,
@@ -17,7 +17,7 @@ export async function POST(req) {
     });
   }
 
-  if (!languageList) {
+  if (!language) {
     return new Response(JSON.stringify({ error: 'Language is required' }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' },
@@ -37,7 +37,7 @@ export async function POST(req) {
   }
 
   try {
-    const data = await scrapeCodeforcesProblemStatus(url,category,languageList);
+    const data = await scrapeCodeforcesProblemStatus(url, category, language);
 
     return new Response(JSON.stringify({ data }), {
       status: 200,
