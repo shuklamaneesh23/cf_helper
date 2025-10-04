@@ -171,7 +171,7 @@ export default function Home() {
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="w-full h-12 px-4 py-2 pr-8 text-black border border-gray-300 rounded-lg mb-4"
+          className="w-full h-12 px-4 py-2 pr-8 text-black border border-gray-300 rounded-lg mb-4 "
           required
         >
           <option value="">Select Category</option>
@@ -212,7 +212,7 @@ export default function Home() {
             ${isDarkMode? "bg-gray-800":"bg-white"}`}>
             {result.length > 0 ? (
               <div>
-                <div className={`mb-2 ${isDarkMode ? "text-white" : "text-black"}`}>
+                <div className={`mb-2 ${isDarkMode? "text-white": "text-black"}`}>
                   <strong>Author:</strong> {result[0].author}
                 </div>
                 <div className="mb-2">
@@ -220,7 +220,7 @@ export default function Home() {
                     href={result[0].submission}
                     target="_blank"
                     rel="noreferrer"
-                    className={` underline ${isDarkMode ? "text-blue-500" : "text-blue-700"}`}
+                    className={` underline ${isDarkMode? "text-blue-500": "text-blue-700"}`}
                   >
                     View Submission
                   </a>
@@ -228,7 +228,7 @@ export default function Home() {
                 <div className="mb-2">
                   <button
                     onClick={handleExplainClick}
-                    className={` underline bg-transparent border-none cursor-pointer ${isDarkMode ? "text-blue-500 " : "text-blue-700"}`}
+                    className={` underline bg-transparent border-none cursor-pointer ${isDarkMode? "text-blue-500 ": "text-blue-700"}`}
                   >
                     View the Code
                   </button>
