@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { parseStream } from "@/utils/streaming";
 import ThemeToggler from "@/components/themetoggler"; 
+import { categories, languages } from "../utils/constants";
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(true); 
@@ -15,30 +16,6 @@ export default function Home() {
   const [explanation, setExplanation] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
-  const categories = [
-    "newbie",
-    "pupil",
-    "specialist",
-    "expert",
-    "candidate master",
-    "master",
-    "international master",
-    "grandmaster",
-    "international grandmaster",
-    "legendary grandmaster",
-  ];
-
-  const languages = [
-    "PyPy 3-64",
-    "C++17 (GCC 7-32)",
-    "Python 3",
-    "PyPy 3",
-    "C++14 (GCC 6-32)",
-    "C++20 (GCC 13-64)",
-    "Java 21",
-    "JavaScript",
-  ];
 
   const maneesh = async () => {
     const sc = sourceCode;
