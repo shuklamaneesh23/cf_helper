@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { parseStream } from "@/utils/streaming";
 import ThemeToggler from "@/components/themetoggler"; 
-import { categories, languages } from "../utils/constants";
+import { categories, languageCategories } from "../utils/constants";
 
 export default function Home() {
   const [isDarkMode, setIsDarkMode] = useState(true); 
